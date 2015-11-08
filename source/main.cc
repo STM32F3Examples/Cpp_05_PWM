@@ -2,7 +2,6 @@
 #include "PWM_stm32f3.h"
 #include "MainApp.h"
 
-
 void tarea1(void const * arguments); //tarea 1
 osThreadId  tarea1ID;	//identificador del hilo tarea 1
 osThreadDef (tarea1,osPriorityNormal,1,0);// macro para definir tareas (aputandor de la funcion, prioridad,?,?)
@@ -14,16 +13,21 @@ osThreadDef (tarea2,osPriorityNormal,1,0);// macro para definir tareas (aputando
 void tarea1Init(void);//funcion que iniciliza la tarea1
 void tarea2Init(void);//funcion que iniciliza la tarea1
 
+void osInitAll(void);
+
 int main(){
 	//User application
+	osInitAll();
+	PWM* pwm  = new PWM_TIMER2_CH1(63,2499);
+	MainApp::main(pwm);
+	return 0;
+}
+
+void osInitAll(void){
 	osKernelInitialize();
 	tarea1Init();
 	tarea2Init();
 	osKernelStart();
-
-	PWM* pwm  = new PWM_TIMER2_CH1(63,2499);
-	MainApp::main(pwm);
-	return 0;
 }
 
 void tarea1Init(void){
