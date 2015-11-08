@@ -2,6 +2,7 @@
 /gcc/objects
 /gcc/*.elf
 /mdk/*
+/nbproject
 tests/gmock_test
 
 !/mdk/*.uvprojx

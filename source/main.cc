@@ -1,5 +1,7 @@
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
-#include "SerialStream_stm32f3.h"
+#include "PWM_stm32f3.h"
+#include "MainApp.h"
+
 
 void tarea1(void const * arguments); //tarea 1
 osThreadId  tarea1ID;	//identificador del hilo tarea 1
@@ -13,16 +15,15 @@ void tarea1Init(void);//funcion que iniciliza la tarea1
 void tarea2Init(void);//funcion que iniciliza la tarea1
 
 int main(){
-	SerialUSART2 serial(9600);
-	serial.printf("\nEl dinero es dinero ara ara\n");
 	//User application
 	osKernelInitialize();
 	tarea1Init();
 	tarea2Init();
 	osKernelStart();
-	while(1){
-		osDelay(1000);
-	}
+
+	PWM* pwm  = new PWM_TIMER2_CH1(63,2499);
+	MainApp::main(pwm);
+	return 0;
 }
 
 void tarea1Init(void){
